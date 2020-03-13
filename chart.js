@@ -19,7 +19,12 @@ function barChartRender() {
         },
         tooltip: {
             useHTML: true,
-            pointFormat: '<center>{point.y} cases</center>'
+            pointFormat: '<center>{point.y} cases</center>',
+            // formatter: function() {
+            //     return '<b>' + this.x + '</b></br>' +
+            //         this.series.name + ': ' + this.y + '</br>' +
+            //         'Total: ' + (this.point.stackTotal - this.y);
+            // }
         },
         xAxis: {
             categories: AllCountries,
@@ -50,16 +55,20 @@ function barChartRender() {
         },
         series: [{
             name: 'Total Cases',
-            data: TotalCases
+            data: TotalCases,
+            stack: 'cases'
         }, {
             name: 'Total Deaths',
-            data: TotalDeaths
+            data: TotalDeaths,
+            stack: 'deaths'
         }, {
             name: 'Today Cases',
-            data: TodayCases_Chart
+            data: TodayCases_Chart,
+            stack: 'cases'
         }, {
             name: 'Today Deaths',
-            data: TodayDeaths_Chart
+            data: TodayDeaths_Chart,
+            stack: 'deaths'
         }]
     });
 }

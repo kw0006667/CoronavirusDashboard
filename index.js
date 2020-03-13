@@ -13,6 +13,7 @@ var TotalDeaths = [];
 var TodayCases = [];
 var TodayCases_Chart = [];
 var TodayDeaths_Chart = [];
+var temp = [];
 
 var countryCasesArray = [];
 var countriesCasesForBubbleArray = [];
@@ -28,6 +29,7 @@ getAllData()
             deaths_data_cache = res.deaths;
             generateAllCountriesCases();
             generateAllCountriesDeaths();
+            completeAllDataArrays();
             barChartRender();
 
             // bubbleChartRender();
@@ -64,7 +66,6 @@ function generateAllCountriesCases() {
         }
     });
 
-    let temp = [];
     for (const country in allCountriesConfirmed) {
         if (allCountriesConfirmed.hasOwnProperty(country)) {
             const cases = allCountriesConfirmed[country];
@@ -76,20 +77,6 @@ function generateAllCountriesCases() {
     }
 
     temp.sort((a, b) => b.confirmed - a.confirmed);
-
-    let count = TOTAL_COUNT;
-    temp.forEach(t => {
-        if (count === 0) {
-            return;
-        }
-        let countryName = t.name;
-        if (countryName !== 'China') {
-            AllCountries.push(countryName);
-            TotalCases.push(allCountriesConfirmed[countryName]);
-            TodayCases_Chart.push(allCountriesTodayCases[countryName]);
-            count--;
-        }
-    });
 }
 
 function generateAllCountriesDeaths() {
@@ -116,22 +103,7 @@ function generateAllCountriesDeaths() {
             } else {
                 allCountriesTodayDeaths[countryName] = isNaN(todayDeaths) ? 0 : todayDeaths;
             }
-
-            if (country.country === "US") {
-                console.log(country.province + ': ' + (isNaN(todayDeaths) ? 0 : todayDeaths));
-            }
         }
-    });
-
-    let count = TOTAL_COUNT;
-    AllCountries.forEach(countryName => {
-        if (count === 0) {
-            return;
-        }
-
-        TotalDeaths.push(allCountriesDeaths[countryName]);
-        TodayDeaths_Chart.push(allCountriesTodayDeaths[countryName]);
-        count--;
     });
 }
 
@@ -145,6 +117,26 @@ function getDateString() {
         todayString: todayString,
         yesterdayString: yesterdayString
     };
+}
+
+function completeAllDataArrays() {
+    let count = TOTAL_COUNT;
+    temp.forEach(t => {
+        if (count === 0) {
+            return;
+        }
+        let countryName = t.name;
+        if (countryName !== 'China') {
+            AllCountries.push(countryName);
+            TotalCases.push(allCountriesConfirmed[countryName]);
+            TodayCases_Chart.push(allCountriesTodayCases[countryName]);
+            TotalDeaths.push(allCountriesDeaths[countryName]);
+            TodayDeaths_Chart.push(allCountriesTodayDeaths[countryName]);
+            count--;
+        }
+    });
+
+    temp = null;
 }
 
 function generateData() {

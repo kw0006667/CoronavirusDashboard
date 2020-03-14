@@ -1,5 +1,7 @@
+var chart;
+
 function barChartRender() {
-    var chart = new Highcharts.chart('container', {
+    chart = new Highcharts.chart('container', {
         chart: {
             type: 'bar',
             // height: '100%',
@@ -71,38 +73,52 @@ function barChartRender() {
 }
 
 function bubbleChartRender() {
-    var chart = new Highcharts.chart('container', {
+    chart = Highcharts.chart('container', {
         chart: {
             type: 'packedbubble',
+            height: '100%',
+            load: function() {
+                this.series.forEach(bubbles => {
+                    bubbles.forEach(bubble => {
+                        if (bubble.name.includes(currentSearch)) {
+                            bubble.select();
+                        }
+                    });
+                });
+            }
         },
         title: {
             text: 'Coronavirus Dashboard'
         },
+        subtitle: {
+            text: 'Coronavirus Status (Only first 50 countires)'
+        },
         tooltip: {
             useHTML: true,
-            pointFormat: '{point.name}: {point.y}'
+            pointFormat: '<b>{point.name}:</b> {point.value} cases'
         },
-
         plotOptions: {
             packedbubble: {
-                minSize: '60%',
-                maxSize: '400%',
+                allowPointSelect: true,
+                minSize: '50%',
+                maxSize: '150%',
                 zMin: 0,
-                zMax: 10000,
+                zMax: 1000,
                 layoutAlgorithm: {
                     splitSeries: false,
-                    gravitationalConstant: 0.002
+                    gravitationalConstant: 0.02
                 },
                 dataLabels: {
                     enabled: true,
                     useHTML: true,
-                    format: '{point.name}<br><center>{point.value}</center></br>',
+                    format: '<b>{point.name}</b></br>{point.value} cases',
                     filter: {
                         property: 'y',
                         operator: '>',
-                        value: 0
+                        value: 1
                     },
                     style: {
+                        fontSize: '12px',
                         color: 'black',
                         textOutline: 'none',
                         fontWeight: 'normal'
@@ -110,10 +126,22 @@ function bubbleChartRender() {
                 }
             }
         },
-
         series: [{
-            name: 'Today Cases',
-            data: TodayCases
-        }]
+                name: 'Total Cases',
+                data: countriesTotalCasesForBubbleArray
+            },
+            {
+                name: 'Total Deaths',
+                data: countriesTotalDeathsForBubbleArray
+            },
+            {
+                name: 'Today Cases',
+                data: countriesTodayCasesForBubbleArray
+            },
+            {
+                name: 'Today Deaths',
+                data: countriesTodayDeathsForBubbleArray
+            }
+        ]
     });
 }

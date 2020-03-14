@@ -76,7 +76,7 @@ function bubbleChartRender() {
     chart = Highcharts.chart('container', {
         chart: {
             type: 'packedbubble',
-            height: '100%',
+            // height: '100%',
             load: function() {
                 this.series.forEach(bubbles => {
                     bubbles.forEach(bubble => {

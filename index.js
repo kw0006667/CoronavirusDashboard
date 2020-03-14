@@ -29,7 +29,7 @@ initialized();
 function initialized() {
     let searchInput = document.getElementById('search');
     searchInput.oninput = function(event) {
-        currentSearch = this.value;
+        currentSearch = this.value.toLowerCase();
         chart.series.forEach(serie => {
             serie.points.forEach(point => {
                 point.update({ color: Highcharts.theme.colors[point.colorIndex] }, false);
@@ -40,7 +40,7 @@ function initialized() {
         if (currentSearch !== '') {
             chart.series.forEach(serie => {
                 serie.points.forEach(point => {
-                    if (point.name.includes(currentSearch)) {
+                    if (point.name.toLowerCase().includes(currentSearch)) {
                         // point.select(true, true);
                     } else {
                         point.update({ color: Highcharts.theme.colors[point.colorIndex] + '11' }, false);

@@ -2,7 +2,7 @@ function barChartRender() {
     var chart = new Highcharts.chart('container', {
         chart: {
             type: 'bar',
-            height: '100%',
+            // height: '100%',
             options3d: {
                 enabled: true,
                 alpha: 5,

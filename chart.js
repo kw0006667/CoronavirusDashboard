@@ -2,14 +2,14 @@ function barChartRender() {
     var chart = new Highcharts.chart('container', {
         chart: {
             type: 'bar',
-            // height: '100%',
-            // options3d: {
-            //     enabled: true,
-            //     alpha: 5,
-            //     beta: 15,
-            //     viewDistance: 25,
-            //     depth: 60
-            // }
+            height: '100%',
+            options3d: {
+                enabled: true,
+                alpha: 5,
+                beta: 15,
+                viewDistance: 25,
+                depth: 60
+            }
         },
         title: {
             text: 'Coronavirus Dashboard'
@@ -29,46 +29,43 @@ function barChartRender() {
         xAxis: {
             categories: AllCountries,
             labels: {
-                // skew3d: true,
+                skew3d: true,
                 style: {
                     fontSize: '12px'
                 }
             }
         },
-        // yAxis: {
-        //     min: 0,
-        //     minorTickInterval: 1,
-        //     tickInterval: 1000,
-        //     title: {
-        //         text: 'Coronavirus Status'
-        //     }
-        // },
+        yAxis: {
+            min: 0,
+            minorTickInterval: 0,
+            tickInterval: 5000,
+            title: {
+                text: 'Coronavirus Status (Only first 50 countires)'
+            }
+        },
         plotOptions: {
             series: {
+                minPointLength: 10,
                 dataLabels: [{
                     enabled: true,
                     format: '{y}'
                 }],
                 stacking: 'normal',
-                // depth: 60
+                depth: 40
             }
         },
         series: [{
             name: 'Total Cases',
-            data: TotalCases,
-            stack: 'cases'
+            data: TotalCases
         }, {
             name: 'Total Deaths',
-            data: TotalDeaths,
-            stack: 'deaths'
+            data: TotalDeaths
         }, {
             name: 'Today Cases',
-            data: TodayCases_Chart,
-            stack: 'cases'
+            data: TodayCases_Chart
         }, {
             name: 'Today Deaths',
-            data: TodayDeaths_Chart,
-            stack: 'deaths'
+            data: TodayDeaths_Chart
         }]
     });
 }

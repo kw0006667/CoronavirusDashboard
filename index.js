@@ -41,6 +41,7 @@ function initialized() {
             chart.series.forEach(serie => {
                 serie.points.forEach(point => {
                     if (point.name.includes(currentSearch)) {
+                        // We don't need too select any point here because we only fade out other points.
                         // point.select(true, true);
                     } else {
                         point.update({ color: Highcharts.theme.colors[point.colorIndex] + '11' }, false);
@@ -187,39 +188,4 @@ function completeAllDataArrays() {
     });
 
     temp = null;
-}
-
-function generateData() {
-    data.forEach(item => {
-        // if (c < 0) {
-        //     return;
-        // }
-        if (item.todayCases > 0 || item.todayDeaths > 0) {
-            AllCountries.push(item.country);
-            TotalCases.push(item.todayCases);
-            TotalDeaths.push(item.todayDeaths);
-        }
-
-        if (item.todayCases > 0) {
-            countriesTotalCasesForBubbleArray.push({ name: item.country, value: item.todayCases });
-        }
-        if (item.todayDeaths > 0) {
-            countriesTotalDeathsForBubbleArray.push({ name: item.country, value: item.todayDeaths });
-        }
-
-        // c--;
-    });
-
-
-    // data.forEach(item => {
-    //     if (item.todayCases > 0) {
-    //         countriesCasesForBubbleArray.push({ name: item.country, value: item.todayCases });
-    //     }
-    //     if (item.todayDeaths > 0) {
-    //         countriesDeathsForBubbleArray.push({ name: item.country, value: item.todayDeaths });
-    //     }
-    // });
-    // data.forEach(item => {
-    //     countryCasesArray.push({ name: item.country, value: item.cases });
-    // });
 }

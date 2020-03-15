@@ -4,7 +4,6 @@ function bubbleChartInitialize() {
     chart = Highcharts.chart('container', {
         chart: {
             type: 'packedbubble',
-            // height: '100%',
             load: function() {
                 this.series.forEach(bubbles => {
                     bubbles.forEach(bubble => {
@@ -152,6 +151,7 @@ function barChartRender() {
 }
 
 function bubbleChartRender() {
+    // TODO: add this function as a callback function and register it into RequestAnimationFrame to improve the performance.
     chart.series[0].setData(countriesTotalCasesForBubbleArray);
     chart.series[1].setData(countriesTotalDeathsForBubbleArray);
     chart.series[2].setData(countriesTodayCasesForBubbleArray);

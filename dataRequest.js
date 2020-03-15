@@ -76,7 +76,6 @@ function getCountryConfirmed(countryName) {
             if (!location.province.includes(',')) {
                 countryConfirmed.push(location);
             }
-            // console.info('Location: ' + location.country);
         }
     });
 

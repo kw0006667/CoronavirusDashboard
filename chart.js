@@ -15,9 +15,6 @@ function bubbleChartInitialize() {
                 });
             }
         },
-        exporting: {
-            showTable: true
-        },
         title: {
             text: 'Coronavirus Dashboard'
         },
@@ -28,16 +25,21 @@ function bubbleChartInitialize() {
             useHTML: true,
             pointFormat: '<b>{point.name}:</b> {point.value} cases'
         },
+        boost: {
+            useGPUTranslations: true,
+            usePreAllocated: true
+        },
         plotOptions: {
             packedbubble: {
                 allowPointSelect: true,
+                boostThreshold: 100,
                 minSize: '50%',
                 maxSize: '150%',
                 zMin: 0,
                 zMax: 1000,
                 layoutAlgorithm: {
                     splitSeries: false,
-                    gravitationalConstant: 0.02
+                    gravitationalConstant: 0.02,
                 },
                 dataLabels: {
                     enabled: true,
@@ -154,4 +156,8 @@ function bubbleChartRender() {
     chart.series[1].setData(countriesTotalDeathsForBubbleArray);
     chart.series[2].setData(countriesTodayCasesForBubbleArray);
     chart.series[3].setData(countriesTodayDeathsForBubbleArray);
+}
+
+function showDataTable() {
+    chart.update({ exporting: { showTable: true } });
 }

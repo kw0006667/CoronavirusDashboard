@@ -66,6 +66,7 @@ function initialized() {
                 completeAllDataArrays();
                 // barChartRender();
 
+                showDataTable();
                 bubbleChartRender();
                 chart.hideLoading();
             }

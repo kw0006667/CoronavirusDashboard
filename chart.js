@@ -1,5 +1,82 @@
 var chart;
 
+function bubbleChartInitialize() {
+    chart = Highcharts.chart('container', {
+        chart: {
+            type: 'packedbubble',
+            // height: '100%',
+            load: function() {
+                this.series.forEach(bubbles => {
+                    bubbles.forEach(bubble => {
+                        if (bubble.name.includes(currentSearch)) {
+                            bubble.select();
+                        }
+                    });
+                });
+            }
+        },
+        exporting: {
+            showTable: true
+        },
+        title: {
+            text: 'Coronavirus Dashboard'
+        },
+        subtitle: {
+            text: 'Coronavirus Status (Only first 50 countires)'
+        },
+        tooltip: {
+            useHTML: true,
+            pointFormat: '<b>{point.name}:</b> {point.value} cases'
+        },
+        plotOptions: {
+            packedbubble: {
+                allowPointSelect: true,
+                minSize: '50%',
+                maxSize: '150%',
+                zMin: 0,
+                zMax: 1000,
+                layoutAlgorithm: {
+                    splitSeries: false,
+                    gravitationalConstant: 0.02
+                },
+                dataLabels: {
+                    enabled: true,
+                    useHTML: true,
+                    format: '<b>{point.name}</b></br>{point.value} cases',
+                    filter: {
+                        property: 'y',
+                        operator: '>',
+                        value: 1
+                    },
+                    style: {
+                        fontSize: '12px',
+                        color: 'black',
+                        textOutline: 'none',
+                        fontWeight: 'normal'
+                    }
+                }
+            }
+        },
+        series: [{
+                name: 'Total Cases',
+                data: []
+            },
+            {
+                name: 'Total Deaths',
+                data: []
+            },
+            {
+                name: 'Today Cases',
+                data: []
+            },
+            {
+                name: 'Today Deaths',
+                data: []
+            }
+        ]
+    });
+}
+
 function barChartRender() {
     chart = new Highcharts.chart('container', {
         chart: {
@@ -73,75 +150,8 @@ function barChartRender() {
 }
 
 function bubbleChartRender() {
-    chart = Highcharts.chart('container', {
-        chart: {
-            type: 'packedbubble',
-            // height: '100%',
-            load: function() {
-                this.series.forEach(bubbles => {
-                    bubbles.forEach(bubble => {
-                        if (bubble.name.includes(currentSearch)) {
-                            bubble.select();
-                        }
-                    });
-                });
-            }
-        },
-        title: {
-            text: 'Coronavirus Dashboard'
-        },
-        subtitle: {
-            text: 'Coronavirus Status (Only first 50 countires)'
-        },
-        tooltip: {
-            useHTML: true,
-            pointFormat: '<b>{point.name}:</b> {point.value} cases'
-        },
-        plotOptions: {
-            packedbubble: {
-                allowPointSelect: true,
-                minSize: '50%',
-                maxSize: '150%',
-                zMin: 0,
-                zMax: 1000,
-                layoutAlgorithm: {
-                    splitSeries: false,
-                    gravitationalConstant: 0.02
-                },
-                dataLabels: {
-                    enabled: true,
-                    useHTML: true,
-                    format: '<b>{point.name}</b></br>{point.value} cases',
-                    filter: {
-                        property: 'y',
-                        operator: '>',
-                        value: 1
-                    },
-                    style: {
-                        fontSize: '12px',
-                        color: 'black',
-                        textOutline: 'none',
-                        fontWeight: 'normal'
-                    }
-                }
-            }
-        },
-        series: [{
-                name: 'Total Cases',
-                data: countriesTotalCasesForBubbleArray
-            },
-            {
-                name: 'Total Deaths',
-                data: countriesTotalDeathsForBubbleArray
-            },
-            {
-                name: 'Today Cases',
-                data: countriesTodayCasesForBubbleArray
-            },
-            {
-                name: 'Today Deaths',
-                data: countriesTodayDeathsForBubbleArray
-            }
-        ]
-    });
+    chart.series[0].setData(countriesTotalCasesForBubbleArray);
+    chart.series[1].setData(countriesTotalDeathsForBubbleArray);
+    chart.series[2].setData(countriesTodayCasesForBubbleArray);
+    chart.series[3].setData(countriesTodayDeathsForBubbleArray);
 }

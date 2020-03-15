@@ -29,7 +29,7 @@ initialized();
 function initialized() {
     let searchInput = document.getElementById('search');
     searchInput.oninput = function(event) {
-        currentSearch = this.value.toLowerCase();
+        currentSearch = this.value;
         chart.series.forEach(serie => {
             serie.points.forEach(point => {
                 point.update({ color: Highcharts.theme.colors[point.colorIndex] }, false);
@@ -40,7 +40,7 @@ function initialized() {
         if (currentSearch !== '') {
             chart.series.forEach(serie => {
                 serie.points.forEach(point => {
-                    if (point.name.toLowerCase().includes(currentSearch)) {
+                    if (point.name.includes(currentSearch)) {
                         // point.select(true, true);
                     } else {
                         point.update({ color: Highcharts.theme.colors[point.colorIndex] + '11' }, false);
@@ -49,6 +49,9 @@ function initialized() {
             });
         }
     };
+
+    bubbleChartInitialize();
+    chart.showLoading();
 
     getAllData()
         .then(data => {
@@ -64,6 +67,7 @@ function initialized() {
                 // barChartRender();
 
                 bubbleChartRender();
+                chart.hideLoading();
             }
         })
         .catch(error => console.error('Error:' + error));

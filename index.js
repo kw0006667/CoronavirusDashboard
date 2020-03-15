@@ -16,27 +16,64 @@ var TodayDeaths_Chart = [];
 var temp = [];
 
 var countryCasesArray = [];
-var countriesCasesForBubbleArray = [];
-var countriesDeathsForBubbleArray = [];
+var countriesTotalCasesForBubbleArray = [];
+var countriesTotalDeathsForBubbleArray = [];
+var countriesTodayCasesForBubbleArray = [];
+var countriesTodayDeathsForBubbleArray = [];
 
-getAllData()
-    .then(data => {
-        return data.json();
-    })
-    .then(res => {
-        if (res) {
-            cases_data_cache = res.confirmed;
-            deaths_data_cache = res.deaths;
-            generateAllCountriesCases();
-            generateAllCountriesDeaths();
-            completeAllDataArrays();
-            barChartRender();
+var currentSearch = '';
 
-            // bubbleChartRender();
+
+initialized();
+
+function initialized() {
+    let searchInput = document.getElementById('search');
+    searchInput.oninput = function(event) {
+        currentSearch = this.value;
+        chart.series.forEach(serie => {
+            serie.points.forEach(point => {
+                point.update({ color: Highcharts.theme.colors[point.colorIndex] }, false);
+            });
+        });
+        chart.redraw();
+
+        if (currentSearch !== '') {
+            chart.series.forEach(serie => {
+                serie.points.forEach(point => {
+                    if (point.name.includes(currentSearch)) {
+                        // We don't need too select any point here because we only fade out other points.
+                        // point.select(true, true);
+                    } else {
+                        point.update({ color: Highcharts.theme.colors[point.colorIndex] + '11' }, false);
+                    }
+                });
+            });
         }
-    })
-    .catch(error => console.error('Error:' + error));
+    };
 
+    bubbleChartInitialize();
+    chart.showLoading();
+
+    getAllData()
+        .then(data => {
+            return data.json();
+        })
+        .then(res => {
+            if (res) {
+                cases_data_cache = res.confirmed;
+                deaths_data_cache = res.deaths;
+                generateAllCountriesCases();
+                generateAllCountriesDeaths();
+                completeAllDataArrays();
+                // barChartRender();
+
+                showDataTable();
+                bubbleChartRender();
+                chart.hideLoading();
+            }
+        })
+        .catch(error => console.error('Error:' + error));
+}
 
 // Including All Cases and today cases
 function generateAllCountriesCases() {
@@ -132,44 +169,23 @@ function completeAllDataArrays() {
             TodayCases_Chart.push(allCountriesTodayCases[countryName]);
             TotalDeaths.push(allCountriesDeaths[countryName]);
             TodayDeaths_Chart.push(allCountriesTodayDeaths[countryName]);
+
+            // for Bubble
+            let totalCases = allCountriesConfirmed[countryName];
+            let totalDeaths = allCountriesDeaths[countryName];
+            let todayCases = allCountriesTodayCases[countryName];
+            let todayDeaths = allCountriesTodayDeaths[countryName];
+            if (totalCases > 0)
+                countriesTotalCasesForBubbleArray.push({ name: countryName, value: allCountriesConfirmed[countryName] });
+            if (totalDeaths > 0)
+                countriesTotalDeathsForBubbleArray.push({ name: countryName, value: allCountriesDeaths[countryName] });
+            if (todayCases > 0)
+                countriesTodayCasesForBubbleArray.push({ name: countryName, value: allCountriesTodayCases[countryName] });
+            if (todayDeaths > 0)
+                countriesTodayDeathsForBubbleArray.push({ name: countryName, value: allCountriesTodayDeaths[countryName] });
             count--;
         }
     });
 
     temp = null;
-}
-
-function generateData() {
-    data.forEach(item => {
-        // if (c < 0) {
-        //     return;
-        // }
-        if (item.todayCases > 0 || item.todayDeaths > 0) {
-            AllCountries.push(item.country);
-            TotalCases.push(item.todayCases);
-            TotalDeaths.push(item.todayDeaths);
-        }
-
-        if (item.todayCases > 0) {
-            countriesCasesForBubbleArray.push({ name: item.country, value: item.todayCases });
-        }
-        if (item.todayDeaths > 0) {
-            countriesDeathsForBubbleArray.push({ name: item.country, value: item.todayDeaths });
-        }
-
-        // c--;
-    });
-
-
-    // data.forEach(item => {
-    //     if (item.todayCases > 0) {
-    //         countriesCasesForBubbleArray.push({ name: item.country, value: item.todayCases });
-    //     }
-    //     if (item.todayDeaths > 0) {
-    //         countriesDeathsForBubbleArray.push({ name: item.country, value: item.todayDeaths });
-    //     }
-    // });
-    // data.forEach(item => {
-    //     countryCasesArray.push({ name: item.country, value: item.cases });
-    // });
 }

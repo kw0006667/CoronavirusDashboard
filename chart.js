@@ -1,5 +1,85 @@
+var chart;
+
+function bubbleChartInitialize() {
+    chart = Highcharts.chart('container', {
+        chart: {
+            type: 'packedbubble',
+            load: function() {
+                this.series.forEach(bubbles => {
+                    bubbles.forEach(bubble => {
+                        if (bubble.name.includes(currentSearch)) {
+                            bubble.select();
+                        }
+                    });
+                });
+            }
+        },
+        title: {
+            text: 'Coronavirus Dashboard'
+        },
+        subtitle: {
+            text: 'Coronavirus Status (Only first 50 countires)'
+        },
+        tooltip: {
+            useHTML: true,
+            pointFormat: '<b>{point.name}:</b> {point.value} cases'
+        },
+        boost: {
+            useGPUTranslations: true,
+            usePreAllocated: true
+        },
+        plotOptions: {
+            packedbubble: {
+                allowPointSelect: true,
+                boostThreshold: 100,
+                minSize: '50%',
+                maxSize: '150%',
+                zMin: 0,
+                zMax: 1000,
+                layoutAlgorithm: {
+                    splitSeries: false,
+                    gravitationalConstant: 0.02,
+                },
+                dataLabels: {
+                    enabled: true,
+                    useHTML: true,
+                    format: '<b>{point.name}</b></br>{point.value} cases',
+                    filter: {
+                        property: 'y',
+                        operator: '>',
+                        value: 1
+                    },
+                    style: {
+                        fontSize: '12px',
+                        color: 'black',
+                        textOutline: 'none',
+                        fontWeight: 'normal'
+                    }
+                }
+            }
+        },
+        series: [{
+                name: 'Total Cases',
+                data: []
+            },
+            {
+                name: 'Total Deaths',
+                data: []
+            },
+            {
+                name: 'Today Cases',
+                data: []
+            },
+            {
+                name: 'Today Deaths',
+                data: []
+            }
+        ]
+    });
+}
+
 function barChartRender() {
-    var chart = new Highcharts.chart('container', {
+    chart = new Highcharts.chart('container', {
         chart: {
             type: 'bar',
             // height: '100%',
@@ -71,49 +151,13 @@ function barChartRender() {
 }
 
 function bubbleChartRender() {
-    var chart = new Highcharts.chart('container', {
-        chart: {
-            type: 'packedbubble',
-        },
-        title: {
-            text: 'Coronavirus Dashboard'
-        },
-        tooltip: {
-            useHTML: true,
-            pointFormat: '{point.name}: {point.y}'
-        },
+    // TODO: add this function as a callback function and register it into RequestAnimationFrame to improve the performance.
+    chart.series[0].setData(countriesTotalCasesForBubbleArray);
+    chart.series[1].setData(countriesTotalDeathsForBubbleArray);
+    chart.series[2].setData(countriesTodayCasesForBubbleArray);
+    chart.series[3].setData(countriesTodayDeathsForBubbleArray);
+}
 
-        plotOptions: {
-            packedbubble: {
-                minSize: '60%',
-                maxSize: '400%',
-                zMin: 0,
-                zMax: 10000,
-                layoutAlgorithm: {
-                    splitSeries: false,
-                    gravitationalConstant: 0.002
-                },
-                dataLabels: {
-                    enabled: true,
-                    useHTML: true,
-                    format: '{point.name}<br><center>{point.value}</center></br>',
-                    filter: {
-                        property: 'y',
-                        operator: '>',
-                        value: 0
-                    },
-                    style: {
-                        color: 'black',
-                        textOutline: 'none',
-                        fontWeight: 'normal'
-                    }
-                }
-            }
-        },
-
-        series: [{
-            name: 'Today Cases',
-            data: TodayCases
-        }]
-    });
+function showDataTable() {
+    chart.update({ exporting: { showTable: true } });
 }

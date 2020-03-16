@@ -163,28 +163,29 @@ function completeAllDataArrays() {
             return;
         }
         let countryName = t.name;
-        if (countryName !== 'China') {
-            AllCountries.push(countryName);
-            TotalCases.push(allCountriesConfirmed[countryName]);
-            TodayCases_Chart.push(allCountriesTodayCases[countryName]);
-            TotalDeaths.push(allCountriesDeaths[countryName]);
-            TodayDeaths_Chart.push(allCountriesTodayDeaths[countryName]);
 
-            // for Bubble
-            let totalCases = allCountriesConfirmed[countryName];
-            let totalDeaths = allCountriesDeaths[countryName];
-            let todayCases = allCountriesTodayCases[countryName];
-            let todayDeaths = allCountriesTodayDeaths[countryName];
-            if (totalCases > 0)
-                countriesTotalCasesForBubbleArray.push({ name: countryName, value: allCountriesConfirmed[countryName] });
-            if (totalDeaths > 0)
-                countriesTotalDeathsForBubbleArray.push({ name: countryName, value: allCountriesDeaths[countryName] });
-            if (todayCases > 0)
-                countriesTodayCasesForBubbleArray.push({ name: countryName, value: allCountriesTodayCases[countryName] });
-            if (todayDeaths > 0)
-                countriesTodayDeathsForBubbleArray.push({ name: countryName, value: allCountriesTodayDeaths[countryName] });
-            count--;
-        }
+        // for Column chart type
+        // Remove in the future
+        // AllCountries.push(countryName);
+        // TotalCases.push(allCountriesConfirmed[countryName]);
+        // TodayCases_Chart.push(allCountriesTodayCases[countryName]);
+        // TotalDeaths.push(allCountriesDeaths[countryName]);
+        // TodayDeaths_Chart.push(allCountriesTodayDeaths[countryName]);
+
+        // for Bubble chart type
+        let totalCases = allCountriesConfirmed[countryName];
+        let totalDeaths = allCountriesDeaths[countryName];
+        let todayCases = allCountriesTodayCases[countryName];
+        let todayDeaths = allCountriesTodayDeaths[countryName];
+        if (totalCases > 0)
+            countriesTotalCasesForBubbleArray.push({ name: countryName, value: allCountriesConfirmed[countryName] });
+        if (totalDeaths > 0)
+            countriesTotalDeathsForBubbleArray.push({ name: countryName, value: allCountriesDeaths[countryName] });
+        if (todayCases > 0)
+            countriesTodayCasesForBubbleArray.push({ name: countryName, value: allCountriesTodayCases[countryName] });
+        if (todayDeaths > 0)
+            countriesTodayDeathsForBubbleArray.push({ name: countryName, value: allCountriesTodayDeaths[countryName] });
+        count--;
     });
 
     temp = null;

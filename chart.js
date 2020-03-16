@@ -30,7 +30,6 @@ function bubbleChartInitialize() {
         },
         plotOptions: {
             packedbubble: {
-                allowPointSelect: true,
                 boostThreshold: 100,
                 minSize: '50%',
                 maxSize: '150%',

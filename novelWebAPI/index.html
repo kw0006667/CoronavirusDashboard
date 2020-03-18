@@ -19,12 +19,26 @@
 
 <body>
     <div class="container">
-        <div class="md-form active-cyan-2 mb-3 mt-3">
+        <div class="md-form active-cyan-2 mb-3 mt-3 sticky">
             <input id="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
         </div>
         <div id="container" style="max-width: 100vh; min-height: calc(100vh - 58px);">
 
         </div>
+
+        <table id="statusTable" class="table table-hover table-dark" style="display: none;">
+            <thead>
+                <tr>
+                    <th scope="col">Country</th>
+                    <th scope="col">Total Cases</th>
+                    <th scope="col">Total Deaths</th>
+                    <th scope="col">Today Cases</th>
+                    <th scope="col">Today Deaths</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -39,6 +53,7 @@
     <script src="../js/dark-unica.src.js"></script>
     <script src="./dataRequest.js"></script>
     <script src="./chart.js"></script>
+    <script src="./table.js"></script>
     <script src="./index.js"></script>
 </body>
 

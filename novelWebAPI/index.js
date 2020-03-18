@@ -1,5 +1,7 @@
 const TOTAL_COUNT = 50;
-var totalCouint = 50;
+var totalCount;
+var filterCount = 50;
+var currentCount;
 
 var cache = {};
 var cases_data_cache = {};
@@ -40,6 +42,7 @@ function initialized() {
         chart.redraw();
 
         if (currentSearch !== '') {
+            filterTable(currentSearch);
             chart.series.forEach(serie => {
                 serie.points.forEach(point => {
                     if (point.name.includes(currentSearch)) {
@@ -50,6 +53,8 @@ function initialized() {
                     }
                 });
             });
+        } else {
+            clearTableStatus();
         }
     };
 
@@ -63,8 +68,9 @@ function initialized() {
         .then(res => {
             if (res) {
                 completeAllDataArraysForNewEndpoint(res);
-                showDataTable();
                 bubbleChartRender();
+                // showDataTable();
+                showTable();
                 chart.hideLoading();
             }
         })
@@ -72,26 +78,20 @@ function initialized() {
 }
 
 function completeAllDataArraysForNewEndpoint(res) {
-    let countLimit = TOTAL_COUNT;
-    res.forEach(country => {
-        if (countLimit === 0) {
-            return;
-        }
-        let countryName = country.country;
-        let totalCases = country.cases;
-        let totalDeaths = country.deaths;
-        let todayCases = country.todayCases;
-        let todayDeaths = country.todayDeaths;
-        if (totalCases > 0)
-            countriesTotalCasesForBubbleArray.push({ name: countryName, value: totalCases });
-        if (totalDeaths > 0)
-            countriesTotalDeathsForBubbleArray.push({ name: countryName, value: totalDeaths });
-        if (todayCases > 0)
-            countriesTodayCasesForBubbleArray.push({ name: countryName, value: todayCases });
-        if (todayDeaths > 0)
-            countriesTodayDeathsForBubbleArray.push({ name: countryName, value: todayDeaths });
+    totalCount = res.length;
 
-        countLimit--;
-    });
+    let tableBody = document.getElementById('statusTable').getElementsByTagName('tbody')[0];
 
+    for (let index = 0; index < res.length; index++) {
+        let countryName = res[index].country;
+        let totalCases = res[index].cases;
+        let totalDeaths = res[index].deaths;
+        let todayCases = res[index].todayCases;
+        let todayDeaths = res[index].todayDeaths;
+        countriesTotalCasesForBubbleArray.push({ name: countryName, value: totalCases > 0 ? totalCases : null });
+        countriesTotalDeathsForBubbleArray.push({ name: countryName, value: totalDeaths > 0 ? totalDeaths : null });
+        countriesTodayCasesForBubbleArray.push({ name: countryName, value: todayCases > 0 ? todayCases : null });
+        countriesTodayDeathsForBubbleArray.push({ name: countryName, value: todayDeaths > 0 ? todayDeaths : null });
+        addNewRowToTable(tableBody, countryName, totalCases, totalDeaths, todayCases, todayDeaths);
+    }
 }

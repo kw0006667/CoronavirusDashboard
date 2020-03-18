@@ -58,12 +58,10 @@ function bubbleChartInitialize() {
             }
         },
         series: [{
-                enabled: false,
                 name: 'Total Cases',
                 data: []
             },
             {
-                enabled: false,
                 name: 'Total Deaths',
                 data: []
             },
@@ -175,12 +173,41 @@ function bubbleChartRender() {
     //     window.requestAnimationFrame(bubbleChartRender);
     // }
 
-    chart.series[0].setData(countriesTotalCasesForBubbleArray);
-    chart.series[1].setData(countriesTotalDeathsForBubbleArray);
-    chart.series[2].setData(countriesTodayCasesForBubbleArray);
-    chart.series[3].setData(countriesTodayDeathsForBubbleArray);
+    chart.series[0].setData(countriesTotalCasesForBubbleArray.slice(0, TOTAL_COUNT));
+    chart.series[1].setData(countriesTotalDeathsForBubbleArray.slice(0, TOTAL_COUNT));
+    chart.series[2].setData(countriesTodayCasesForBubbleArray.slice(0, TOTAL_COUNT));
+    chart.series[3].setData(countriesTodayDeathsForBubbleArray.slice(0, TOTAL_COUNT));
+    currentCount = TOTAL_COUNT;
+    if (filterCount > TOTAL_COUNT) {
+        addBubbleTask();
+    }
 }
 
+function addBubbleTask() {
+    if (currentCount < filterCount) {
+        if (currentCount < countriesTotalCasesForBubbleArray.length) {
+            let cases = countriesTotalCasesForBubbleArray[currentCount - 1];
+            chart.series[0].addPoint([cases.name, cases.value], false, false);
+        }
+        if (currentCount < countriesTotalDeathsForBubbleArray.length) {
+            let deaths = countriesTotalDeathsForBubbleArray[currentCount - 1];
+            chart.series[1].addPoint([deaths.name, deaths.value], false, false);
+        }
+        if (currentCount < countriesTodayCasesForBubbleArray.length) {
+            let todayCase = countriesTodayCasesForBubbleArray[currentCount - 1];
+            chart.series[2].addPoint([todayCase.name, todayCase.value], false, false);
+        }
+        if (currentCount < countriesTodayDeathsForBubbleArray.length) {
+            let todayDeath = countriesTodayDeathsForBubbleArray[currentCount - 1];
+            chart.series[3].addPoint([todayDeath.name, todayDeath.value], false, false);
+        }
+        currentCount++;
+
+        window.requestAnimationFrame(addBubbleTask);
+    } else {
+        chart.redraw();
+    }
+}
 
 function showDataTable() {
     chart.update({ exporting: { showTable: true } });

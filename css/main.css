@@ -2,6 +2,20 @@ body {
     background: linear-gradient(135deg, #2a2a2b 0%, #3e3e40 100%);
 }
 
+td,
+th {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 10pt;
+}
+
+.sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    z-index: 20000;
+    top: 16px;
+}
+
 
 /* For Highcharts */
 

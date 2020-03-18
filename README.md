@@ -4,6 +4,9 @@ This project was implement by pure JavaScript and some famous libaraies, Highcha
 
 Access [https://kw0006667.github.io/CoronavirusDashboardDemo/](https://kw0006667.github.io/CoronavirusDashboardDemo/) to see the website.
 
+## Preview
+You can access [https://kw0006667.github.io/CoronavirusDashboardDemo/novelWebAPI/](https://kw0006667.github.io/CoronavirusDashboardDemo/novelWebAPI/) to see the preview website. It will download all of countries in table below. Then you can also search the country name and filter in table as well. It will be the main portal in the short future.
+
 ## Features
 1. Support quick country name search and highlight their bubbles in real-time.
 2. Show the data as table in below, if you want to read the values directly.

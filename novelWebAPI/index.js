@@ -24,6 +24,7 @@ var countriesTotalCasesForBubbleArray = [];
 var countriesTotalDeathsForBubbleArray = [];
 var countriesTodayCasesForBubbleArray = [];
 var countriesTodayDeathsForBubbleArray = [];
+var mapData = [];
 
 var currentSearch = '';
 
@@ -58,7 +59,8 @@ function initialized() {
         }
     };
 
-    bubbleChartInitialize();
+    // bubbleChartInitialize();
+    initializeMap();
     chart.showLoading();
 
     getAllDataByNovelWebAPI()
@@ -68,8 +70,9 @@ function initialized() {
         .then(res => {
             if (res) {
                 completeAllDataArraysForNewEndpoint(res);
-                bubbleChartRender();
+                // bubbleChartRender();
                 // showDataTable();
+                renderMap();
                 showTable();
                 chart.hideLoading();
             }
@@ -93,5 +96,16 @@ function completeAllDataArraysForNewEndpoint(res) {
         countriesTodayCasesForBubbleArray.push({ name: countryName, value: todayCases > 0 ? todayCases : null });
         countriesTodayDeathsForBubbleArray.push({ name: countryName, value: todayDeaths > 0 ? todayDeaths : null });
         addNewRowToTable(tableBody, countryName, totalCases, totalDeaths, todayCases, todayDeaths);
+        let code = findName(countryName);
+        if (code !== '') {
+            mapData.push({
+                name: countryName,
+                code: code,
+                z: totalCases > 0 ? totalCases : null, // total cases
+                totalDeath: totalDeaths,
+                todayCases: todayCases,
+                todayDeaths: todayDeaths
+            });
+        }
     }
 }

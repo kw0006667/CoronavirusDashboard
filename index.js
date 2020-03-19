@@ -64,16 +64,16 @@ function initialized() {
 
         if (currentSearch !== '') {
             filterTable(currentSearch);
-            chart.series.forEach(serie => {
-                serie.points.forEach(point => {
-                    if (point.name.includes(currentSearch)) {
-                        // We don't need too select any point here because we only fade out other points.
-                        // point.select(true, true);
-                    } else {
-                        point.update({ color: Highcharts.theme.colors[point.colorIndex] + '11' }, false);
-                    }
-                });
-            });
+            // chart.series.forEach(serie => {
+            //     serie.points.forEach(point => {
+            //         if (point.name.includes(currentSearch)) {
+            //             // We don't need too select any point here because we only fade out other points.
+            //             // point.select(true, true);
+            //         } else {
+            //             point.update({ color: Highcharts.theme.colors[point.colorIndex] + '11' }, false);
+            //         }
+            //     });
+            // });
         } else {
             clearTableStatus();
         }

@@ -6,10 +6,18 @@ function initializeMap() {
             map: 'custom/world'
         },
         title: {
+            useHTML: true,
             text: 'Coronavirus Dashboard'
         },
         subtitle: {
-            text: ''
+            useHTML: true,
+            text: '<span style="color: gray;">data source: <span><a href="https://github.com/CSSEGISandData/COVID-19">JHU CSSE</a>'
+        },
+        xAxis: {
+            minRange: 5
+        },
+        yAxis: {
+            minRange: 5
         },
         legend: {
             enabled: true
@@ -35,7 +43,7 @@ function initializeMap() {
             maxSize: '15%',
             tooltip: {
                 useHTML: true,
-                pointFormat: '{point.name}<br>Total cases: {point.z}<br>Total Deaths: {point.totalDeaths}<br>Today Cases: {point.todayCases}<br>Today Deaths: {point.todayDeaths}'
+                pointFormat: '{point.name}<br>Total cases: {point.z}<br>Total Deaths: {point.totalDeaths}<br>Total Recovered: {point.totalRecovered}' //Today Cases: {point.todayCases}<br>Today Deaths: {point.todayDeaths}'
             }
         }]
     });

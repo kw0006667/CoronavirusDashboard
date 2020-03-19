@@ -21,9 +21,33 @@ var countriesTotalDeathsForBubbleArray = [];
 var countriesTodayCasesForBubbleArray = [];
 var countriesTodayDeathsForBubbleArray = [];
 var mapData = [];
+var newDataStructure = [{
+    id: 1,
+    country_code: 'US',
+    countryName: 'USA',
+    provinces: [{
+        id: 2,
+        country_code: 'US',
+        countryName: 'USA',
+        provinces: 'Washington',
+        latest: {
+            totalCases: 1,
+            totalDeaths: 1,
+            totalRecovered: 1,
+            todayCases: 1,
+            todayDeaths: 1,
+        }
+    }],
+    latest: {
+        totalCases: 1,
+        totalDeaths: 1,
+        totalRecovered: 1,
+        todayCases: 1,
+        todayDeaths: 1,
+    }
+}]
 
 var currentSearch = '';
-
 
 initialized();
 
@@ -55,33 +79,105 @@ function initialized() {
         }
     };
 
-    // bubbleChartInitialize();
     initializeMap();
     chart.showLoading();
 
-    getAllDataV2()
-        .then(data => {
-            return data.json();
-        })
+    // getAllDataV2()
+    //     .then(data => {
+    //         return data.json();
+    //     })
+    //     .then(res => {
+    //         if (res) {
+    //             let locations = res.locations;
+    //             generateAllLocationsData(locations);
+    //             // cases_data_cache = res.confirmed;
+    //             // deaths_data_cache = res.deaths;
+    //             // generateAllCountriesCases();
+    //             // generateAllCountriesDeaths();
+    //             // completeAllDataArrays();
+    //             // barChartRender();
+
+    //             // showDataTable();
+    //             renderMap();
+    //             showTable();
+    //             // bubbleChartRender();
+    //             chart.hideLoading();
+    //         }
+    //     })
+    //     .catch(error => console.error('Error:' + error));
+
+    let dateStrigns = getTodayDateString();
+    getAllDataCSSEGI(dateStrigns.yesterday, dateStrigns.today)
         .then(res => {
             if (res) {
-                let locations = res.locations;
-                generateAllLocationsData(locations);
-                // cases_data_cache = res.confirmed;
-                // deaths_data_cache = res.deaths;
-                // generateAllCountriesCases();
-                // generateAllCountriesDeaths();
-                // completeAllDataArrays();
-                // barChartRender();
-
-                // showDataTable();
-                renderMap();
-                showTable();
-                // bubbleChartRender();
-                chart.hideLoading();
+                let data = csvToJSON(res);
+                data.forEach(item => {
+                    let code = isoCountries[item["Country/Region"]];
+                    if (code != null && code != undefined) {
+                        let confirmed = Number.parseInt(item['Confirmed']);
+                        let deaths = Number.parseInt(item['Deaths']);
+                        let recovered = Number.parseInt(item['Recovered']);
+                        if (AllCountries[code]) {
+                            AllCountries[code].z += confirmed;
+                            AllCountries[code].totalDeaths += deaths;
+                            AllCountries[code].totalRecovered += recovered;
+                        } else {
+                            AllCountries[code] = {
+                                name: item['Country/Region'],
+                                code: code,
+                                z: confirmed,
+                                totalDeaths: deaths,
+                                totalRecovered: recovered,
+                                todayCases: 0,
+                                todayDeaths: 0
+                            };
+                        }
+                    }
+                });
             }
         })
-        .catch(error => console.error('Error:' + error));
+        .then(() => {
+            let tableBody = document.getElementById('statusTable').getElementsByTagName('tbody')[0];
+
+            for (const country in AllCountries) {
+                if (AllCountries.hasOwnProperty(country)) {
+                    const location = AllCountries[country];
+                    mapData.push(location);
+                }
+            }
+
+            mapData.sort((a, b) => { return b.z - a.z; });
+            mapData.forEach(location => {
+                let countryName = location.name;
+                let totalCases = location.z;
+                let totalDeaths = location.totalDeaths;
+                let todayCases = location.todayCases;
+                let todayDeaths = location.todayDeaths;
+                let totalRecovered = location.totalRecovered;
+                addNewRowToTable(tableBody, countryName, totalCases, totalDeaths, todayCases, todayDeaths, totalRecovered);
+            });
+
+            renderMap();
+            showTable();
+            chart.hideLoading();
+        })
+        .catch(error => console.error('Error: ' + error));
+}
+
+function getTodayDateString() {
+    // We can only get the previous day, so, it should be yesterday
+    let yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date);
+    const yesterdayYear = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(yesterday)
+    const yesterdayMonth = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(yesterday)
+    const yesterdayDate = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(yesterday)
+    const yesterdayString = `${yesterdayMonth}-${yesterdayDate}-${yesterdayYear}`;
+
+    let todayDate = (d => new Date(d.setDate(d.getDate() - 1)))(new Date);
+    const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(todayDate)
+    const month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(todayDate)
+    const date = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(todayDate)
+    const dateString = `${month}-${date}-${year}`;
+    return { yesterday: yesterdayString, today: dateString };
 }
 
 function generateAllLocationsData(locations) {
@@ -89,6 +185,7 @@ function generateAllLocationsData(locations) {
         if (!location.province.includes(',')) {
             if (!AllCountries[location.country_code]) {
                 AllCountries[location.country_code] = {
+                    id: location.id,
                     name: location.country,
                     code: location.country_code,
                     z: location.latest.confirmed,
@@ -103,6 +200,9 @@ function generateAllLocationsData(locations) {
                 AllCountries[location.country_code].totalRecovered += location.latest.recovered;
             }
         }
+
+        // New data structure
+
     });
 
     // AllCountries.sort((a, b) => { console.log(b.z); return b.z - a.z; });
@@ -113,7 +213,6 @@ function generateAllLocationsData(locations) {
         if (AllCountries.hasOwnProperty(country)) {
             const location = AllCountries[country];
             mapData.push(location);
-
         }
     }
 

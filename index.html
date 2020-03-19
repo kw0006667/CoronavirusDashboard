@@ -12,7 +12,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.2/dist/latest/bootstrap-autocomplete.min.js"></script>
     <link rel="stylesheet" href="./css/main.css">
-    <!-- <link rel="stylesheet" href="./css/dark-unica.css"> -->
 
     <title>Corona Virus Dashboard</title>
 </head>
@@ -22,19 +21,20 @@
         <div class="md-form active-cyan-2 mb-3 mt-3 sticky">
             <input id="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
         </div>
-        <div id="container" style="max-width: 100vh; min-height: calc(100vh - 58px);">
+        <div id="container" style="max-width: 100vh; min-height: calc(90vh - 58px);">
 
         </div>
 
-        <table id="statusTable" class="table table-hover table-dark" style="display: none;">
+        <table id="statusTable" class="table table-hover table-striped" style="display: none;">
             <thead>
                 <tr>
                     <th scope="col">Country</th>
                     <th scope="col">Total Cases</th>
                     <th scope="col">Total Deaths</th>
                     <th scope="col">Total Recovered</th>
+                    <!-- Cureently, there is no data for those values in below
                     <th scope="col">Today Cases</th>
-                    <th scope="col">Today Deaths</th>
+                    <th scope="col">Today Deaths</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -57,13 +57,13 @@
     <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
 
-    <!-- <script src="./mockdata.js"></script> -->
-    <!-- <script src="./theme.js"></script> -->
-    <script src="js/dark-unica.src.js"></script>
+    <!-- <script src="js/dark-unica.src.js"></script> -->
+    <script src="js/sand-signika.src.js"></script>
     <script src="./dataRequest.js"></script>
     <script src="./table.js"></script>
     <script src="./map.js"></script>
-    <!-- <script src="./chart.js"></script> -->
+    <script src="js/utils.js"></script>
+    <script src="js/country_code.js"></script>
     <script src="./index.js"></script>
 </body>
 

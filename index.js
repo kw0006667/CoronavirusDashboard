@@ -20,6 +20,7 @@ var countriesTotalCasesForBubbleArray = [];
 var countriesTotalDeathsForBubbleArray = [];
 var countriesTodayCasesForBubbleArray = [];
 var countriesTodayDeathsForBubbleArray = [];
+var mapData = [];
 
 var currentSearch = '';
 
@@ -30,14 +31,15 @@ function initialized() {
     let searchInput = document.getElementById('search');
     searchInput.oninput = function(event) {
         currentSearch = this.value;
-        chart.series.forEach(serie => {
-            serie.points.forEach(point => {
-                point.update({ color: Highcharts.theme.colors[point.colorIndex] }, false);
-            });
-        });
-        chart.redraw();
+        // chart.series.forEach(serie => {
+        //     serie.points.forEach(point => {
+        //         point.update({ color: Highcharts.theme.colors[point.colorIndex] }, false);
+        //     });
+        // });
+        // chart.redraw();
 
         if (currentSearch !== '') {
+            filterTable(currentSearch);
             chart.series.forEach(serie => {
                 serie.points.forEach(point => {
                     if (point.name.includes(currentSearch)) {
@@ -48,31 +50,83 @@ function initialized() {
                     }
                 });
             });
+        } else {
+            clearTableStatus();
         }
     };
 
-    bubbleChartInitialize();
+    // bubbleChartInitialize();
+    initializeMap();
     chart.showLoading();
 
-    getAllData()
+    getAllDataV2()
         .then(data => {
             return data.json();
         })
         .then(res => {
             if (res) {
-                cases_data_cache = res.confirmed;
-                deaths_data_cache = res.deaths;
-                generateAllCountriesCases();
-                generateAllCountriesDeaths();
-                completeAllDataArrays();
+                let locations = res.locations;
+                generateAllLocationsData(locations);
+                // cases_data_cache = res.confirmed;
+                // deaths_data_cache = res.deaths;
+                // generateAllCountriesCases();
+                // generateAllCountriesDeaths();
+                // completeAllDataArrays();
                 // barChartRender();
 
-                showDataTable();
-                bubbleChartRender();
+                // showDataTable();
+                renderMap();
+                showTable();
+                // bubbleChartRender();
                 chart.hideLoading();
             }
         })
         .catch(error => console.error('Error:' + error));
+}
+
+function generateAllLocationsData(locations) {
+    locations.forEach(location => {
+        if (!location.province.includes(',')) {
+            if (!AllCountries[location.country_code]) {
+                AllCountries[location.country_code] = {
+                    name: location.country,
+                    code: location.country_code,
+                    z: location.latest.confirmed,
+                    totalDeaths: location.latest.deaths,
+                    totalRecovered: location.latest.recovered,
+                    todayCases: 0,
+                    todayDeaths: 0
+                };
+            } else {
+                AllCountries[location.country_code].z += location.latest.confirmed;
+                AllCountries[location.country_code].totalDeaths += location.latest.deaths;
+                AllCountries[location.country_code].totalRecovered += location.latest.recovered;
+            }
+        }
+    });
+
+    // AllCountries.sort((a, b) => { console.log(b.z); return b.z - a.z; });
+
+    let tableBody = document.getElementById('statusTable').getElementsByTagName('tbody')[0];
+
+    for (const country in AllCountries) {
+        if (AllCountries.hasOwnProperty(country)) {
+            const location = AllCountries[country];
+            mapData.push(location);
+
+        }
+    }
+
+    mapData.sort((a, b) => { return b.z - a.z; });
+    mapData.forEach(location => {
+        let countryName = location.name;
+        let totalCases = location.z;
+        let totalDeaths = location.totalDeaths;
+        let todayCases = location.todayCases;
+        let todayDeaths = location.todayDeaths;
+        let totalRecovered = location.totalRecovered;
+        addNewRowToTable(tableBody, countryName, totalCases, totalDeaths, todayCases, todayDeaths, totalRecovered);
+    });
 }
 
 // Including All Cases and today cases
@@ -163,14 +217,6 @@ function completeAllDataArrays() {
             return;
         }
         let countryName = t.name;
-
-        // for Column chart type
-        // Remove in the future
-        // AllCountries.push(countryName);
-        // TotalCases.push(allCountriesConfirmed[countryName]);
-        // TodayCases_Chart.push(allCountriesTodayCases[countryName]);
-        // TotalDeaths.push(allCountriesDeaths[countryName]);
-        // TodayDeaths_Chart.push(allCountriesTodayDeaths[countryName]);
 
         // for Bubble chart type
         let totalCases = allCountriesConfirmed[countryName];

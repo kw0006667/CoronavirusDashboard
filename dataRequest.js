@@ -54,6 +54,7 @@ const data_struct = {
 
 const GET_ALL_DATA_URL = 'https://coronavirus-tracker-api.herokuapp.com/all';
 const GET_ALL_CONFIRMED_DATA_URL = "https://coronavirus-tracker-api.herokuapp.com/confirmed";
+const GET_ALL_DATA_V2_URL = "https://coronavirus-tracker-api.herokuapp.com/v2/locations";
 const GET_ALL_DEATHS_DATA_URL = 'https://coronavirus-tracker-api.herokuapp.com/deaths';
 
 
@@ -63,6 +64,10 @@ function getAllData() {
 
 function getAllDeathsData() {
     return fetch(GET_ALL_DEATHS_DATA_URL);
+}
+
+function getAllDataV2() {
+    return fetch(GET_ALL_DATA_V2_URL);
 }
 
 function getCountryConfirmed(countryName) {

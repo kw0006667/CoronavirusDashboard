@@ -3,7 +3,8 @@ var chart;
 function initializeMap() {
     chart = Highcharts.mapChart('container', {
         chart: {
-            map: 'custom/world'
+            map: 'custom/world-highres',
+            // height: '100%'
         },
         title: {
             useHTML: true,
@@ -11,7 +12,7 @@ function initializeMap() {
         },
         subtitle: {
             useHTML: true,
-            text: '<span style="color: gray;">data source: <span><a href="https://github.com/CSSEGISandData/COVID-19">JHU CSSE</a>'
+            text: '<span style="color: gray;">data source: <span><a href="https://github.com/NovelCOVID/API">NovelCOVID/API</a>'
         },
         xAxis: {
             minRange: 5
@@ -32,7 +33,7 @@ function initializeMap() {
             name: 'Countries',
             color: '#e0e0e0',
             showInLegend: false,
-            enabledMouseTracking: false
+            enabledMouseTracking: false,
         }, {
             type: 'mapbubble',
             name: 'Confirmed Cases',
@@ -41,6 +42,13 @@ function initializeMap() {
             data: [],
             minSize: 8,
             maxSize: '15%',
+            allowPointSelect: true,
+            cursor: 'pointer',
+            states: {
+                select: {
+
+                }
+            },
             tooltip: {
                 useHTML: true,
                 pointFormat: '{point.name}<br>Total cases: {point.z}<br>Total Deaths: {point.totalDeaths}<br>Total Recovered: {point.totalRecovered}' //Today Cases: {point.todayCases}<br>Today Deaths: {point.todayDeaths}'

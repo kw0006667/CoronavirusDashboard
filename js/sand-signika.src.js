@@ -6,12 +6,12 @@
  * License: www.highcharts.com/license
  */
 'use strict';
-(function (factory) {
+(function(factory) {
     if (typeof module === 'object' && module.exports) {
         factory['default'] = factory;
         module.exports = factory;
     } else if (typeof define === 'function' && define.amd) {
-        define('highcharts/themes/sand-signika', ['highcharts'], function (Highcharts) {
+        define('highcharts/themes/sand-signika', ['highcharts'], function(Highcharts) {
             factory(Highcharts);
             factory.Highcharts = Highcharts;
             return factory;
@@ -19,14 +19,15 @@
     } else {
         factory(typeof Highcharts !== 'undefined' ? Highcharts : undefined);
     }
-}(function (Highcharts) {
+}(function(Highcharts) {
     var _modules = Highcharts ? Highcharts._modules : {};
+
     function _registerModule(obj, path, args, fn) {
         if (!obj.hasOwnProperty(path)) {
             obj[path] = fn.apply(null, args);
         }
     }
-    _registerModule(_modules, 'themes/sand-signika.js', [_modules['parts/Globals.js']], function (Highcharts) {
+    _registerModule(_modules, 'themes/sand-signika.js', [_modules['parts/Globals.js']], function(Highcharts) {
         /* *
          *
          *  (c) 2010-2020 Torstein Honsi
@@ -46,14 +47,15 @@
             type: 'text/css'
         }, null, document.getElementsByTagName('head')[0]);
         // Add the background image to the container
-        Highcharts.addEvent(Highcharts.Chart, 'afterGetContainer', function () {
+        Highcharts.addEvent(Highcharts.Chart, 'afterGetContainer', function() {
             // eslint-disable-next-line no-invalid-this
-            this.container.style.background =
-                'url(https://www.highcharts.com/samples/graphics/sand.png)';
+            // this.container.style.background =
+            //     'url(https://www.highcharts.com/samples/graphics/sand.png) opacity: 0.8';
         });
         Highcharts.theme = {
             colors: ['#f45b5b', '#8085e9', '#8d4654', '#7798BF', '#aaeeee',
-                '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+                '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'
+            ],
             chart: {
                 backgroundColor: null,
                 style: {
@@ -138,7 +140,7 @@
         Highcharts.setOptions(Highcharts.theme);
 
     });
-    _registerModule(_modules, 'masters/themes/sand-signika.src.js', [], function () {
+    _registerModule(_modules, 'masters/themes/sand-signika.src.js', [], function() {
 
 
     });

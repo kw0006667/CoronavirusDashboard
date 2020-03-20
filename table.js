@@ -1,6 +1,6 @@
 function addNewRowToTable(tableBody, country, totalCases, totalDeaths, todayCases, todayDeaths, totalRecovered) {
     let newRow = tableBody.insertRow(-1);
-    newRow.innerHTML = '<td>' + country + '</td>' + '<td>' + totalCases + '</td>' + '<td>' + totalDeaths + '</td>' + '<td>' + totalRecovered + '</td>'; // + '<td>' + todayCases + '</td>' + '<td>' + todayDeaths + '</td>';
+    newRow.innerHTML = '<td>' + country + '</td>' + '<td>' + totalCases + '</td>' + '<td>' + totalDeaths + '</td>' + '<td>' + todayCases + '</td>' + '<td>' + todayDeaths + '</td>' + '<td>' + totalRecovered + '</td>'; // + '<td>' + todayCases + '</td>' + '<td>' + todayDeaths + '</td>';
 }
 
 function clearTableStatus() {

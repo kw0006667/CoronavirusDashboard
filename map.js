@@ -51,7 +51,7 @@ function initializeMap() {
             },
             tooltip: {
                 useHTML: true,
-                pointFormat: '{point.name}<br>Total cases: {point.z}<br>Total Deaths: {point.totalDeaths}<br>Total Recovered: {point.totalRecovered}' //Today Cases: {point.todayCases}<br>Today Deaths: {point.todayDeaths}'
+                pointFormat: '{point.name}<br>Total Cases: {point.z}<br>Total Deaths: {point.totalDeaths}<br>Today Cases: {point.todayCases}<br>Today Deaths: {point.todayDeaths}<br>Total Recovered: {point.totalRecovered}' //Today Cases: {point.todayCases}<br>Today Deaths: {point.todayDeaths}'
             }
         }]
     });

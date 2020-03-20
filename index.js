@@ -10,23 +10,7 @@ initialized();
 
 function initialized() {
     let searchInput = document.getElementById('search');
-    searchInput.oninput = function(event) {
-        currentSearch = this.value;
-
-        if (currentSearch !== '') {
-            filterTable(currentSearch);
-            let code = findCodeInMap(currentSearch);
-            if (code && code != prevZoomPointCode) {
-                prevZoomPointCode = code;
-                chart.zoomOut();
-                let point = chart.get(code);
-                chart.mapZoom(0.5, point.x, point.y);
-            }
-        } else {
-            clearTableStatus();
-            chart.mapZoom();
-        }
-    };
+    searchInput.oninput = oninputSearch;
 
     initializeMap();
     chart.showLoading();
@@ -88,7 +72,7 @@ function completeAllDataArraysForNewEndpoint(res) {
                 name: countryName,
                 code: code,
                 z: totalCases > 0 ? totalCases : null, // total cases
-                totalDeath: totalDeaths,
+                totalDeaths: totalDeaths,
                 todayCases: todayCases,
                 todayDeaths: todayDeaths,
                 totalRecovered: recovered
@@ -110,4 +94,26 @@ function findCodeInMap(countryName) {
         }
     }
     return code;
+}
+
+/**
+ * oninput event function for search input box
+ * @param {Event} event handler event
+ */
+function oninputSearch(event) {
+    currentSearch = this.value;
+
+    if (currentSearch !== '') {
+        filterTable(currentSearch);
+        let code = findCodeInMap(currentSearch);
+        if (code && code != prevZoomPointCode) {
+            prevZoomPointCode = code;
+            chart.zoomOut();
+            let point = chart.get(code);
+            chart.mapZoom(0.5, point.x, point.y);
+        }
+    } else {
+        clearTableStatus();
+        chart.mapZoom();
+    }
 }

@@ -1,4 +1,8 @@
-// Creditd by http://techslides.com/convert-csv-to-json-in-javascript
+/**
+ * convert csv text string to Javascript object
+ * creditd by http://techslides.com/convert-csv-to-json-in-javascript
+ * @param {string} csv the csv format string
+ */
 function csvToJSON(csv) {
     let lines = csv.split('\n');
     var result = [];

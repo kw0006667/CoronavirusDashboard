@@ -93,8 +93,6 @@ function completeAllDataArraysForNewEndpoint(res) {
                 todayDeaths: todayDeaths,
                 totalRecovered: recovered
             });
-        } else {
-            console.log(countryName);
         }
     }
 }

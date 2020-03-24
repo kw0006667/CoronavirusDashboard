@@ -1,3 +1,7 @@
+* {
+    font-family: Signika, sans-serif;
+}
+
 body {
     /* background: linear-gradient(135deg, #2a2a2b 0%, #3e3e40 100%); */
     background: url("https://www.highcharts.com/samples/graphics/sand.png");
@@ -53,8 +57,11 @@ table {
 td,
 th {
     text-align: center;
-    font-family: sans-serif;
     font-size: 10pt;
+}
+
+.table-row-clickable {
+    cursor: pointer;
 }
 
 .sticky {

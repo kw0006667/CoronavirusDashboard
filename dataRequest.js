@@ -7,6 +7,7 @@ const GET_ALL_DEATHS_DATA_URL = 'https://coronavirus-tracker-api.herokuapp.com/d
 // The format of the end should be 03-18-2020.csv (MM-DD-YYYY.csv)
 const GET_ALL_DATA_CSSEGI_ENDPOINT = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/';
 const GET_ALL_DATA_NOVEL_ENDPOINT = 'https://corona.lmao.ninja/countries';
+const GET_STATES_DATA_NOVEL_ENDPOINT = 'https://corona.lmao.ninja/states';
 
 function getAllData() {
     return fetch(GET_ALL_DATA_URL);
@@ -26,6 +27,14 @@ function getUSDataV2() {
 
 function getAllDataByNovelWebAPI() {
     return fetch(GET_ALL_DATA_NOVEL_ENDPOINT);
+}
+
+function getStatsDataByNovelWebAPI() {
+    return fetch(GET_STATES_DATA_NOVEL_ENDPOINT)
+        .then(data => {
+            return data.json();
+        })
+        .catch(error => console.error('Error: ' + error));
 }
 
 function getAllDataCSSEGI(yesterday, today) {

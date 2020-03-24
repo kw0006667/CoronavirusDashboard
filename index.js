@@ -15,6 +15,11 @@ function initialized() {
     initializeMap();
     chart.showLoading();
 
+    getStatsDataByNovelWebAPI()
+        .then(res => {
+            generateStatesDataTable(res);
+        });
+
     getAllDataByNovelWebAPI()
         .then(data => {
             return data.json();

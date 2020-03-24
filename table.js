@@ -82,6 +82,6 @@ function generateStatesDataTable(states) {
     let tBody = document.getElementById('statesUSTable').getElementsByTagName('tbody')[0];
     states.forEach(state => {
         let newRow = tBody.insertRow(-1);
-        newRow.innerHTML = '<td>' + state.state + '</td>' + '<td>' + state.cases + '</td>' + '<td>' + state.deaths + '</td>' + '<td>' + state.todayCases + '</td>' + '<td>' + state.todayDeaths + '</td>' + '<td>' + state.recovered + '</td>';
+        newRow.innerHTML = '<td>' + state.state + '</td>' + '<td>' + state.cases + '</td>' + '<td>' + state.deaths + '</td>' + '<td>' + state.todayCases + '</td>' + '<td>' + state.todayDeaths + '</td>' + '<td>' + state.active + '</td>';
     });
 }

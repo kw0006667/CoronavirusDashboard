@@ -1,0 +1,113 @@
+{
+    "dir": "ltr",
+    "lang": "English",
+    "name": "Coronavirus Dashboard",
+    "scope": "/CoronavirusDashboard/",
+    "display": "standalone",
+    "start_url": "https://kw0006667.github.io/CoronavirusDashboard/",
+    "short_name": "COVID 19 Dashboard",
+    "theme_color": "transparent",
+    "description": "",
+    "orientation": "any",
+    "background_color": "transparent",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [{
+            "src": "/images/60cbb983-48ce-e6b4-a933-59f00a82ca40.webPlatform.png",
+            "sizes": "44x44",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/d621404b-1e51-9bf9-9f3d-1ae4f91604f8.webPlatform.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/0f3da08d-15ed-2246-4af8-7c9d837af3fb.webPlatform.png",
+            "sizes": "1240x600",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/6b718477-f454-39aa-792f-c0f3d59fb3c3.webPlatform.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/f81df4a0-68ab-849b-bf75-1bbed7c42630.webPlatform.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/48de5774-d94a-b534-22a6-0d977e6b6ccc.webPlatform.png",
+            "sizes": "88x88",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/878e53a9-fe19-4e1b-f167-80d39aa77a8d.webPlatform.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/2e543e01-b31d-2346-67a3-155ce0f94343.webPlatform.png",
+            "sizes": "50x50",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/15e6c01f-dfc6-de12-779c-c2f6d67203fb.webPlatform.png",
+            "sizes": "620x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/b6dcfbec-25a2-ec72-c438-c5e879015022.webPlatform.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/ac6aa793-d85e-7432-140f-9f570056f4e9.webPlatform.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/a4046027-c585-1942-9af8-3e61d2607a76.webPlatform.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/3211d9ae-119e-df22-7dda-eb550de70c31.webPlatform.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/29e19c03-6a63-98b4-6387-358139785efd.webPlatform.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/94f91103-c459-b2c5-78d1-a2380ece3d0e.webPlatform.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/3abe1c21-9514-c839-81e7-8745d15380c2.webPlatform.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/792961f2-e9a0-6add-6219-d6cb438d15e4.webPlatform.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/7494cdfb-6e12-6f0f-b45a-079882cb337b.webPlatform.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/f388b7cd-d965-03c9-12e5-10af97b2e2de.webPlatform.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        }
+    ],
+    "url": "https://kw0006667.github.io/CoronavirusDashboard/",
+    "screenshots": []
+}

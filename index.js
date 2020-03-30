@@ -110,15 +110,16 @@ function oninputSearch(event) {
 
     if (currentSearch !== '') {
         filterTable(currentSearch);
-        let code = findCodeInMap(currentSearch);
-        if (code && code != prevZoomPointCode) {
-            prevZoomPointCode = code;
-            chart.zoomOut();
-            let point = chart.get(code);
-            chart.mapZoom(0.5, point.x, point.y);
-        }
+        // TODO: re-actie this search feature after fixing performance for Highmap
+        // let code = findCodeInMap(currentSearch);
+        // if (code && code != prevZoomPointCode) {
+        //     prevZoomPointCode = code;
+        //     chart.zoomOut();
+        //     let point = chart.get(code);
+        //     chart.mapZoom(0.5, point.x, point.y);
+        // }
     } else {
         clearTableStatus();
-        chart.mapZoom();
+        // chart.mapZoom();
     }
 }

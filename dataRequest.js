@@ -25,8 +25,13 @@ function getUSDataV2() {
     return fetch(GET_US_DATA_V2_URL);
 }
 
-function getAllDataByNovelWebAPI() {
-    return fetch(GET_ALL_DATA_NOVEL_ENDPOINT);
+/**
+ * yeterday: true or false - if show yesterday data
+ * sort: [cases, todaycases...] - sort by which column
+ * @param {string} query query parameters
+ */
+function getAllDataByNovelWebAPI(query = '?sort=cases') {
+    return fetch(GET_ALL_DATA_NOVEL_ENDPOINT + query);
 }
 
 function getStatsDataByNovelWebAPI() {

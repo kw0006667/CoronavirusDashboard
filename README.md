@@ -5,7 +5,7 @@ This project was implement by pure JavaScript and some famous libaraies, Highcha
 3. https://corona.lmao.ninja/ from [NovelCOVID/API](https://github.com/NovelCOVID/API)
 
 
-Access [https://kw0006667.github.io/CoronavirusDashboardDemo/](https://kw0006667.github.io/CoronavirusDashboardDemo/) to see the website.
+Access [https://kw0006667.github.io/CoronavirusDashboard/](https://kw0006667.github.io/CoronavirusDashboard/) to see the website.
 
 ## Features
 1. Show the data as table in below, if you want to read the values directly.
